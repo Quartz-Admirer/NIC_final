@@ -18,7 +18,6 @@ This project was developed by Oleg Shchendrigin and Dmitrii Ryazanov at Innopoli
 
 The repository contains the core scripts, experiment utilities, and results directories. A possible organization reflecting the project components:
 
-```
 REPO_ROOT/
 │
 ├── BTC_Prediction/           # Main application/final model scripts (Suggested)
@@ -48,7 +47,6 @@ REPO_ROOT/
 │
 ├── requirements.txt          # Python dependencies (Example below)
 └── README.md                 # This file
-```
 
 ## Features Used
 
@@ -80,7 +78,6 @@ REPO_ROOT/
 ```bash
 git clone [https://github.com/Quartz-Admirer/NIC_final.git](https://github.com/Quartz-Admirer/NIC_final.git)
 cd NIC_final
-```
 
 **3. Create and Populate `requirements.txt`:**
    Create a file named `requirements.txt` with the following content (adjust versions if needed):
@@ -93,7 +90,7 @@ cd NIC_final
    python-dotenv
    requests
    # Add any other specific libraries used
-   ```
+
 
 **4. Install Dependencies:**
 ```bash
@@ -195,4 +192,3 @@ Future work should focus on completing the comparative analysis, performing join
 * **Main Project Repository:** [https://github.com/Quartz-Admirer/NIC_final/tree/main](https://github.com/Quartz-Admirer/NIC_final/tree/main)
 * **Datasets on Google Drive:** [https://drive.google.com/drive/folders/1Xgijksr7bPRmxFRowSb3J_VO0HQSZLT3?usp=sharing](https://drive.google.com/drive/folders/1Xgijksr7bPRmxFRowSb3J_VO0HQSZLT3?usp=sharing)
 
-```
