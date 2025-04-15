@@ -11,7 +11,6 @@ OUTPUT_FILENAME = "top_results_summary.txt"
 COLUMNS_TO_SHOW = ['num_boids', 'dimension', 'max_speed', 'perception_radius', 'rmse', 'mae', 'best_val_loss', 'duration_sec', 'error']
 
 def find_limit_from_filename(filename):
-    """Извлекает число лимита из имени файла."""
     try:
         parts = os.path.splitext(filename)[0].split('_')
         for part in reversed(parts):
