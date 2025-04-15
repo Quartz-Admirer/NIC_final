@@ -1,6 +1,3 @@
-Понял, без проблем. Вот весь README одним цельным блоком кода Markdown, включающий всю последнюю информацию и ссылки, с исправленным форматированием. Я убрал явные `TODO` по недостающим данным, просто указав в тексте, что сравнение требует дополнительного запуска.
-
-
 # LSTM-Based Bitcoin Price Forecasting with Boids Features
 
 ## Introduction
@@ -19,41 +16,6 @@ This project was developed by Oleg Shchendrigin and Dmitrii Ryazanov at Innopoli
 ## Project Structure
 
 The repository contains the core scripts, experiment utilities, and results directories.
-
-
-REPO_ROOT/
-│
-├── BTC_Prediction/           # Main application/final model scripts (Suggested)
-│   ├── .env                  # Configuration file (Template below)
-│   ├── boids.py              # Boids simulation logic
-│   ├── load_data.py          # Binance data loading and basic preprocessing
-│   ├── model.py              # Main script: Train/eval LSTM WITH Boids features
-│   └── noboids.py            # Main script: Train/eval LSTM WITHOUT Boids features
-│
-├── datasets/                 # Directory for storing generated CSV/JSON datasets
-│   └── ... (e.g., 10000_400_100_10_150.csv / .json) ...
-│
-├── experiments/              # Scripts and results from the initial parameter sweep phase
-│   ├── datamore.py           # Script used to generate the 642 datasets
-│   ├── top_results_generate.py # Script to parse experiment summaries
-│   └── summaries/            # Directory containing CSV/TXT summaries from Phase 1
-│       └── ... (experiment_summary_*.csv, top_results_summary.txt) ...
-│
-├── experiment_results_final/ # Directory for storing results of final runs
-│   └── 10000_400_100_10_150_with_boids/ # Example output dir for 'with Boids'
-│   │   ├── best_model_with_boids.pth
-│   │   ├── best_model_with_boids_losses_final.png
-│   │   ├── evaluation_plot_with_boids_final.png
-│   │   └── summary_with_boids.json
-│   └── 10000_400_100_10_150_no_boids/ # Example output dir for 'no Boids'
-│       ├── best_model_no_boids.pth
-│       ├── best_model_no_boids_losses.png
-│       ├── evaluation_plot_no_boids.png
-│       └── summary_no_boids.json
-│   └── ... (other potential final results) ...
-│
-├── requirements.txt          # Python dependencies (Example below)
-└── README.md                 # This file
 
 
 ## Features Used
