@@ -1,0 +1,10 @@
+# requirements.txt
+
+numpy
+pandas
+torch
+matplotlib
+scikit-learn
+python-dotenv
+requests
+itertools
