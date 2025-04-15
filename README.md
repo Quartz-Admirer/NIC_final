@@ -1,4 +1,6 @@
-```markdown
+Понял, без проблем. Вот весь README одним цельным блоком кода Markdown, включающий всю последнюю информацию и ссылки, с исправленным форматированием. Я убрал явные `TODO` по недостающим данным, просто указав в тексте, что сравнение требует дополнительного запуска.
+
+
 # LSTM-Based Bitcoin Price Forecasting with Boids Features
 
 ## Introduction
@@ -8,15 +10,16 @@ This project explores the use of Long Short-Term Memory (LSTM) networks for pred
 The project involved several stages:
 1.  Extensive dataset generation (642 datasets) by varying Boids simulation parameters and historical data lengths (1k to 20k hourly records). The 20000-record set remained incomplete (126 out of 192 combinations missing) due to time constraints.
 2.  Initial experiments to identify promising Boids parameter configurations using fixed LSTM settings.
-3.  Evaluation of LSTM models trained with and without Boids features on a selected dataset (\texttt{LIMIT=10000}, Boids Config: \texttt{400, 100, 10, 150}) using refined hyperparameters (\texttt{LEARNING_RATE=5e-3}, \texttt{EPOCHS=3000}).
+3.  Evaluation of LSTM models trained with and without Boids features on a selected dataset (`LIMIT=10000`, Boids Config: `400, 100, 10, 150`) using refined hyperparameters (`LEARNING_RATE=5e-3`, `EPOCHS=3000`).
 
-The best result obtained in this study was for the model including Boids features, achieving a Mean Absolute Error (MAE) of \$527.47 on the test set. A direct comparison with the model without Boids features under identical hyperparameters was planned but not completed within the project's timeframe.
+The best result obtained in this study was for the model including Boids features, achieving a Mean Absolute Error (MAE) of $527.47 on the test set. A direct comparison with the model without Boids features under identical hyperparameters was planned but requires a separate execution.
 
 This project was developed by Oleg Shchendrigin and Dmitrii Ryazanov at Innopolis University. (Initial team member Georgii Iakovlev did not contribute significantly to the final project).
 
 ## Project Structure
 
-The repository contains the core scripts, experiment utilities, and results directories. A possible organization reflecting the project components:
+The repository contains the core scripts, experiment utilities, and results directories.
+
 
 REPO_ROOT/
 │
@@ -30,23 +33,28 @@ REPO_ROOT/
 ├── datasets/                 # Directory for storing generated CSV/JSON datasets
 │   └── ... (e.g., 10000_400_100_10_150.csv / .json) ...
 │
-├── experiments/              # Scripts and results from the initial parameter sweep
+├── experiments/              # Scripts and results from the initial parameter sweep phase
 │   ├── datamore.py           # Script used to generate the 642 datasets
 │   ├── top_results_generate.py # Script to parse experiment summaries
 │   └── summaries/            # Directory containing CSV/TXT summaries from Phase 1
 │       └── ... (experiment_summary_*.csv, top_results_summary.txt) ...
 │
 ├── experiment_results_final/ # Directory for storing results of final runs
-│   └── 10000_400_100_10_150_with_boids/
-│       ├── best_model_with_boids.pth
-│       ├── best_model_with_boids_losses_final.png
-│       ├── evaluation_plot_with_boids_final.png
-│       └── summary_with_boids.json
-│   └── 10000_400_100_10_150_no_boids/ # Results for no_boids run needed here
-│       └── ...
+│   └── 10000_400_100_10_150_with_boids/ # Example output dir for 'with Boids'
+│   │   ├── best_model_with_boids.pth
+│   │   ├── best_model_with_boids_losses_final.png
+│   │   ├── evaluation_plot_with_boids_final.png
+│   │   └── summary_with_boids.json
+│   └── 10000_400_100_10_150_no_boids/ # Example output dir for 'no Boids'
+│       ├── best_model_no_boids.pth
+│       ├── best_model_no_boids_losses.png
+│       ├── evaluation_plot_no_boids.png
+│       └── summary_no_boids.json
+│   └── ... (other potential final results) ...
 │
 ├── requirements.txt          # Python dependencies (Example below)
 └── README.md                 # This file
+
 
 ## Features Used
 
@@ -61,7 +69,7 @@ REPO_ROOT/
 
 ## Methodology Overview
 
-1.  **Data Loading/Generation:** Fetch hourly BTC/USDT data (Binance API via `load_data.py`). If pre-processed data (CSV + JSON with scaling info) for specific parameters is not found in `datasets/`, generate it: calculate MA and `future_close`, run Boids simulation (`boids.py`), combine features, handle NaNs, scale features/target (`MinMaxScaler`), save files (`load_or_generate_data` function).
+1.  **Data Loading/Generation:** Fetch hourly BTC/USDT K-line data (Binance API via `load_data.py`). If pre-processed data (CSV + JSON) for specific parameters isn't found in `datasets/`, generate it: calculate MA/`future_close`, run Boids simulation (`boids.py`), combine features, handle NaNs, scale features/target (`MinMaxScaler`), save files (`load_or_generate_data` function).
 2.  **Sequence Creation:** Transform scaled time series into sequences for LSTM (`create_sequences`).
 3.  **Data Splitting:** Split chronologically into train/test sets (`train_test_split`).
 4.  **Model Training:** Train LSTM (`LSTMModel`) using Adam optimizer, MSE loss. Save best model checkpoint based on validation loss (`train_model`). Read hyperparameters from `.env`.
@@ -78,19 +86,21 @@ REPO_ROOT/
 ```bash
 git clone [https://github.com/Quartz-Admirer/NIC_final.git](https://github.com/Quartz-Admirer/NIC_final.git)
 cd NIC_final
+```
 
 **3. Create and Populate `requirements.txt`:**
-   Create a file named `requirements.txt` with the following content (adjust versions if needed):
+   Create a file named `requirements.txt` with the following content:
    ```txt
-   torch
-   pandas
+   # requirements.txt
    numpy
-   scikit-learn
+   pandas
+   torch
    matplotlib
+   scikit-learn
    python-dotenv
    requests
-   # Add any other specific libraries used
-
+   itertools
+   ```
 
 **4. Install Dependencies:**
 ```bash
@@ -98,7 +108,7 @@ pip install -r requirements.txt
 ```
 
 **5. Create `.env` File:**
-   Create a file named `.env` in the root directory. Use the following template, ensuring parameters match the desired dataset and model configuration:
+   Create a file named `.env` in the project directory. Use the following template, adjusting parameters as needed (these reflect the final reported run):
 
    ```dotenv
    # .env file
@@ -112,13 +122,13 @@ pip install -r requirements.txt
    TARGET_COL=future_close
    MA_WINDOW=50
 
-   # Model & Training Parameters (Use these for the final comparison)
+   # Model & Training Parameters (Final Tuned Parameters)
    SEQ_LENGTH=20
    TRAIN_RATIO=0.8
    HIDDEN_DIM=64
    NUM_LAYERS=2
-   LEARNING_RATE=5e-3 # Final LR used for best results
-   EPOCHS=3000      # Final Epochs used for best results
+   LEARNING_RATE=5e-3
+   EPOCHS=3000
    DEVICE=auto # Options: 'auto', 'cuda', 'cpu'
 
    # Output & Logging Parameters
@@ -135,27 +145,25 @@ Ensure the `.env` file is configured correctly.
 ```bash
 python model.py
 ```
-   * Loads/generates data matching `.env`. Trains using all features. Saves results (model, plots, summary) to a subdirectory in `RESULTS_BASE_DIR` named like `..._with_boids/`.
+   * Loads/generates data matching `.env`. Trains using all features. Saves results (best model, plots, summary JSON) to a subdirectory in `RESULTS_BASE_DIR` (e.g., `..._with_boids/`).
 
 **2. Run Training & Evaluation without Boids:**
 ```bash
 python noboids.py
 ```
-   * Loads/generates the *same* base data file. Trains using only `close`, `ma_close`. Saves results to a subdirectory named like `..._no_boids/`.
+   * Loads/generates the *same* base data file. Trains using only `close`, `ma_close`. Saves results to a different subdirectory (e.g., `..._no_boids/`).
 
 **3. Generate Multiple Datasets (Optional):**
-   * Modify and run `experiments/datamore.py` to populate the `datasets/` folder.
+   * Modify and run `experiments/datamore.py` to populate `datasets/`.
 
 **4. Parse Experiment Results (Optional):**
-   * Use `experiments/top_results_generate.py` to analyze summary files generated during Phase 1 experiments.
+   * Use `experiments/top_results_generate.py` to analyze summary files from initial experiments.
 
 ## Datasets
 
 Pre-generated datasets from the initial parameter sweep (642 combinations) are available for download:
 
 * **Google Drive Link:** [https://drive.google.com/drive/folders/1Xgijksr7bPRmxFRowSb3J_VO0HQSZLT3?usp=sharing](https://drive.google.com/drive/folders/1Xgijksr7bPRmxFRowSb3J_VO0HQSZLT3?usp=sharing)
-
-These datasets vary in `DATA_LIMIT`, `NUM_BOIDS`, `DIMENSION`, `MAX_SPEED`, and `PERCEPTION_RADIUS`.
 
 ## Results Summary
 
@@ -165,10 +173,10 @@ The final evaluation focused on the `DATA_LIMIT=10000` dataset with Boids parame
     * Test MAE: **527.47**
     * Test RMSE: **809.32**
 * **Model without Boids Features:**
-    * Test MAE: *(Requires running `noboids.py` with identical final hyperparameters)*
-    * Test RMSE: *(Requires running `noboids.py` with identical final hyperparameters)*
+    * Test MAE: *(Result from `noboids.py` run with identical final hyperparameters needed for comparison)*
+    * Test RMSE: *(Result from `noboids.py` run with identical final hyperparameters needed for comparison)*
 
-The best results obtained in this study were achieved by the model including Boids features. However, a direct comparison necessitates completing the corresponding run for the model without Boids using the final, tuned hyperparameters. The achieved MAE of ~$527 represents the current benchmark for this specific configuration.
+The best performance observed was achieved by the model including Boids features. A definitive conclusion on the benefit of Boids features requires the comparative results from the model trained without them under identical conditions. The achieved MAE of ~$527, while an improvement over initial non-tuned runs, suggests further refinement may be necessary for practical application.
 
 ## Limitations and Future Work
 
@@ -176,19 +184,20 @@ The best results obtained in this study were achieved by the model including Boi
 * Hyperparameter tuning was performed manually; automated optimization could yield further improvements.
 * The Boids simulation rules were simple and independent of market state.
 * Evaluation relied primarily on MAE/RMSE. Directional accuracy and backtesting metrics were not explored.
-* Comparison against strong non-deep-learning baselines was not performed.
+* Comparison against strong statistical or machine learning baselines was not performed.
 
-Future work should focus on completing the comparative analysis, performing joint hyperparameter optimization, exploring advanced architectures (e.g., Attention, Transformers), integrating market feedback into Boids, adding diverse features, and evaluating with more application-oriented metrics.
+Future work should prioritize completing the comparative analysis, performing joint hyperparameter optimization, exploring advanced architectures (e.g., Attention, Transformers), enhancing Boids features, adding diverse feature sets, evaluating directional accuracy, and comparing against robust baselines.
 
 ## Authors
 
 * Oleg Shchendrigin
 * Dmitrii Ryazanov
 
-*(Initial team member Georgii Iakovlev did not contribute significantly to the final project).*
+*(Initial team member Georgii Iakovlev did not contribute significantly to the final project)*
 
 ## Code Links
 
 * **Main Project Repository:** [https://github.com/Quartz-Admirer/NIC_final/tree/main](https://github.com/Quartz-Admirer/NIC_final/tree/main)
 * **Datasets on Google Drive:** [https://drive.google.com/drive/folders/1Xgijksr7bPRmxFRowSb3J_VO0HQSZLT3?usp=sharing](https://drive.google.com/drive/folders/1Xgijksr7bPRmxFRowSb3J_VO0HQSZLT3?usp=sharing)
 
+```
