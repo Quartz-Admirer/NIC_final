@@ -10,22 +10,18 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import MinMaxScaler # <<< Added import
+from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from dotenv import load_dotenv
 
-# Attempt to import local modules needed for data generation
 try:
     import load_data
     import boids
 except ImportError:
-    # Don't exit yet, loading might still work if files exist
     print("Warning: load_data.py or boids.py not found. Data generation will fail if needed.")
     pass
 
-# --- 1. Model Definition (Keep as is) ---
 class LSTMModel(nn.Module):
-    # ... (код класса без изменений) ...
     def __init__(self, input_dim: int, hidden_dim: int, num_layers: int = 1):
         super().__init__()
         self.hidden_dim = hidden_dim
@@ -41,9 +37,7 @@ class LSTMModel(nn.Module):
         return out
 
 
-# --- 2. Data Preparation (Keep as is) ---
 def create_sequences(df: pd.DataFrame, feature_cols: list[str], target_col: str, seq_length: int) -> tuple[np.ndarray, np.ndarray]:
-    # ... (код функции без изменений) ...
     required_cols = feature_cols + [target_col]
     if not all(col in df.columns for col in required_cols):
         missing = [col for col in required_cols if col not in df.columns]
@@ -65,7 +59,6 @@ def create_sequences(df: pd.DataFrame, feature_cols: list[str], target_col: str,
 
 
 def train_test_split(X: np.ndarray, y: np.ndarray, train_ratio: float) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    # ... (код функции без изменений) ...
     if len(X) == 0:
         print("Warning: Input X for train_test_split is empty.")
         return np.array([]), np.array([]), np.array([]), np.array([])
@@ -85,7 +78,6 @@ def train_model(
     epochs: int, lr: float, device: torch.device,
     checkpoint_path: Path, output_dir: Path, plot_losses: bool
 ) -> tuple[float, int]:
-    # ... (код функции без изменений, как в предыдущем ответе) ...
     if len(X_train) == 0 or len(y_train) == 0:
         print("Error: Training data is empty. Cannot train model.")
         return float("inf"), -1
